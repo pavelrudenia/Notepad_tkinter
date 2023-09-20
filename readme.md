@@ -22,35 +22,12 @@
 
 ## Исходный код
 
-# Импорт необходимых библиотек
-import pandas as pd
-import torch
-import torch.nn as nn
-import torch.optim as optim
-from torch.utils.data import Dataset, DataLoader
-from sklearn.model_selection import train_test_split
-
-# Загрузка датасета из CSV файла
-data = pd.read_csv("rurebus_dataset.csv")
-
-# Разделение данных на тренировочный и тестовый наборы
-train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
-# Разделение тренировочного набора на тренировочный и валидационный наборы
-train_data, val_data = train_test_split(train_data, test_size=0.1, random_state=42)
-
-# Определение класса RurebusDataset, являющегося подклассом torch.utils.data.Dataset
-class RurebusDataset(Dataset):
-    def __init__(self, data):
-        self.data = data
-
-    def __len__(self):
-        return len(self.data)
-
-    def __getitem__(self, index):
-        input_sequence = self.data.iloc[index]['sequence']
-        label = self.data.iloc[index]['label']
-
-        return input_sequence, label
+| Описание | Код |
+| --- | --- |
+| Импорт необходимых библиотек | ```python import pandas as pd import torch import torch.nn as nn import torch.optim as optim from torch.utils.data import Dataset, DataLoader from sklearn.model_selection import train_test_split ``` |
+| Загрузка датасета из CSV файла | ```python data = pd.read_csv("rurebus_dataset.csv") ``` |
+| Разделение данных на тренировочный и тестовый наборы | ```python train_data, test_data = train_test_split(data, test_size=0.2, random_state=42) train_data, val_data = train_test_split(train_data, test_size=0.1, random_state=42) ``` |
+| Определение класса `RurebusDataset` | ```python class RurebusDataset(Dataset): def __init__(self, data): self.data = data def __len__(self): return len(self.data) def __getitem__(self, index): input_sequence = self.data.iloc[index]['sequence'] label = self.data.iloc[index]['label'] return input_sequence, label ``` |
 ## Помощь и контрибуция
 
 Если у вас возникли вопросы или вы хотите внести свой вклад в проект, пожалуйста, создайте issue или pull request в этом репозитории.

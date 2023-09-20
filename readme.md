@@ -1,4 +1,4 @@
-Вот ваш текст в формате README.md с дополнительным оформлением для GitHub:
+
 
 # Распознавание именованных сущностей
 
@@ -17,42 +17,40 @@
 3. **Оцените качество модели на тестовых данных** – протестируйте вашу модель на тестовых данных и получите метрики качества.
 4. **Создайте отчёт в виде README на GitHub** – создайте описание вашего проекта, включая результаты, инструкции по запуску и другую полезную информацию.
 
-## Инструкции по запуску
 
-Чтобы запустить проект, выполните следующие шаги:
 
-1. **Установите зависимости** – используйте `pip` для установки всех необходимых зависимостей:
-
-   ```
-   pip install -r requirements.txt
-   ```
-
-2. **Обучите модель** – запустите скрипт обучения модели:
-
-   ```
-   python train.py
-   ```
-
-3. **Оцените качество модели** – запустите скрипт для оценки качества модели на тестовых данных:
-
-   ```
-   python evaluate.py
-   ```
-
-4. **Создайте отчёт в формате README.md** – создайте файл `README.md`, в котором будет описан ваш проект, включая результаты, инструкции и другую полезную информацию.
-
-## Результаты
-
-Модель, обученная на датасете RuREBus, достигла следующих результатов на тестовых данных:
-
-- **Точность**: 0.85
-- **Полнота**: 0.82
-- **F1-мера**: 0.83
 
 ## Исходный код
 
-Весь исходный код для реализации нейронной сети и обучения модели можно найти в файле [main.py](https://github.com/username/repo/blob/main/main.py).
+# Импорт необходимых библиотек
+import pandas as pd
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import Dataset, DataLoader
+from sklearn.model_selection import train_test_split
 
+# Загрузка датасета из CSV файла
+data = pd.read_csv("rurebus_dataset.csv")
+
+# Разделение данных на тренировочный и тестовый наборы
+train_data, test_data = train_test_split(data, test_size=0.2, random_state=42)
+# Разделение тренировочного набора на тренировочный и валидационный наборы
+train_data, val_data = train_test_split(train_data, test_size=0.1, random_state=42)
+
+# Определение класса RurebusDataset, являющегося подклассом torch.utils.data.Dataset
+class RurebusDataset(Dataset):
+    def __init__(self, data):
+        self.data = data
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, index):
+        input_sequence = self.data.iloc[index]['sequence']
+        label = self.data.iloc[index]['label']
+
+        return input_sequence, label
 ## Помощь и контрибуция
 
 Если у вас возникли вопросы или вы хотите внести свой вклад в проект, пожалуйста, создайте issue или pull request в этом репозитории.
